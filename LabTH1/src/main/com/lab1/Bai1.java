@@ -180,33 +180,33 @@ public class Bai1 {
     System.out.println(codeRandom);
     String codeInput;
     int soLanNhapCode = 0;
+    String message = "Nhập mã xác thực: ";
     do {
-      if (soLanNhapCode > 0) {
-        System.out.print("Mã sai, vui lòng nhập lại: ");
-      } else {
-        System.out.print("Nhập mã xác thực: ");
+      if (soLanNhapCode != 0) {
+        message = "Mã sai, vui lòng nhập lại: ";
       }
-      codeInput = scanner.nextLine();
+      System.out.print(message);
+      codeInput = scanner.next();
       soLanNhapCode++;
       if (soLanNhapCode > 4) {
         System.out.println("Bạn đã nhập lại quá 3 lần");
         return false;
       }
     } while (!codeInput.equals(codeRandom));
+    scanner.nextLine();
     return true;
   }
 
   private static boolean handleCCCDCase() {
     if (!verifyCode()) {
       return false;
+    }
+    if (inputCCCD()) {
+      handleCCCDFunctions();
+      return true;
     } else {
-      if (inputCCCD()) {
-        handleCCCDFunctions();
-        return true;
-      } else {
-        System.out.println("Đang thoát ra menu chính....");
-        return true;
-      }
+      System.out.println("Đang thoát ra menu chính....");
+      return true;
     }
   }
 
