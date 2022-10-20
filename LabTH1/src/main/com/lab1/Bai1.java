@@ -112,11 +112,11 @@ public class Bai1 {
   }
 
   // todo: ----------------------------Methods------------------------
-  private static int randomNumber() {
-    int max = 1000;
-    int min = 1;
-    return (int) Math.floor(Math.random() * (max - min + 1) + min);
-  }
+  // private static int randomNumber() {
+  //   int max = 1000;
+  //   int min = 1;
+  //   return (int) Math.floor(Math.random() * (max - min + 1) + min);
+  // }
 
   private static String randomSixChar() {
     String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
