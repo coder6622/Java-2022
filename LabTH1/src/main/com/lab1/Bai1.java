@@ -3,6 +3,7 @@ package main.com.lab1;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -88,7 +89,7 @@ public class Bai1 {
     handleMenuMain();
   }
 
-  public static void OutputMenuMain() {
+  private static void OutputMenuMain() {
     String seperate =
         "+-----------------------------+-----------------------------+-----------------------------|";
     String versionApp = "v1.0.0";
@@ -110,13 +111,29 @@ public class Bai1 {
     System.out.print(">> Nhập chức năng: ");
   }
 
-  //todo: ----------------------------Methods------------------------
-  public static int Random() {
+  // todo: ----------------------------Methods------------------------
+  private static int randomNumber() {
     int max = 1000;
     int min = 1;
     return (int) Math.floor(Math.random() * (max - min + 1) + min);
   }
 
+  private static String randomSixChar() {
+    String upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String lower = upper.toLowerCase();
+    String digits = "0123456789";
+    String alphanum = upper + lower + digits;
+
+    Random random = new Random();
+    char[] buf = new char[6];
+    char[] symbols = alphanum.toCharArray();
+
+    for (int i = 0; i < buf.length; i++) {
+      buf[i] = symbols[random.nextInt(symbols.length)];
+    }
+
+    return String.valueOf(buf);
+  }
 
   private static boolean isNumeric(String strNum) {
     if (strNum == null) {
@@ -125,11 +142,11 @@ public class Bai1 {
     return checkNumber.matcher(strNum).matches();
   }
 
-  public static boolean isEven(int n) {
+  private static boolean isEven(int n) {
     return (n & 1) == 0;
   }
 
-  public static int caculateCentury(int gender) {
+  private static int caculateCentury(int gender) {
     int temp = gender;
     int centuryPin = 20;
     if (!isEven(temp)) {
@@ -138,7 +155,7 @@ public class Bai1 {
     return temp / 2 + centuryPin;
   }
 
-  public static String caculateYear(String namSinh, int century) {
+  private static String caculateYear(String namSinh, int century) {
     return Integer.toString(century - 1) + namSinh;
   }
 
@@ -157,38 +174,44 @@ public class Bai1 {
     return "Không có giá trị";
   }
 
-
   // ----------------------------Events handle--------------------------------------
-  private static void verifyCode() {
-    int codeRandom = Random();
-    int codeInput;
-    int soLanNhapCode = 0;
+  private static boolean verifyCode() {
+    String codeRandom = randomSixChar();
     System.out.println(codeRandom);
+    String codeInput;
+    int soLanNhapCode = 0;
     do {
       if (soLanNhapCode > 0) {
         System.out.print("Mã sai, vui lòng nhập lại: ");
       } else {
         System.out.print("Nhập mã xác thực: ");
       }
-      codeInput = scanner.nextInt();
+      codeInput = scanner.nextLine();
       soLanNhapCode++;
-    } while (codeInput != codeRandom);
+      if (soLanNhapCode > 4) {
+        System.out.println("Bạn đã nhập lại quá 3 lần");
+        return false;
+      }
+    } while (!codeInput.equals(codeRandom));
+    return true;
   }
 
   private static boolean handleCCCDCase() {
-    verifyCode();
-    if (inputCCCD()) {
-      handleCCCDFunctions();
-      return true;
+    if (!verifyCode()) {
+      return false;
     } else {
-      System.out.println("Đang thoát ra menu chính....");
-      return true;
+      if (inputCCCD()) {
+        handleCCCDFunctions();
+        return true;
+      } else {
+        System.out.println("Đang thoát ra menu chính....");
+        return true;
+      }
     }
   }
 
   private static boolean inputCCCD() {
     int length;
-    scanner.nextLine();
     int soLanNhapCode = 0;
     do {
       if (soLanNhapCode > 0) {
@@ -208,7 +231,7 @@ public class Bai1 {
     return true;
   }
 
-  public static void handleCCCDFunctions() {
+  private static void handleCCCDFunctions() {
     boolean isExitCase = false;
     do {
       displayMenuCCCD();
@@ -252,7 +275,7 @@ public class Bai1 {
     } while (!isExitCase);
   }
 
-  public static void handleMenuMain() {
+  private static void handleMenuMain() {
     do {
       OutputMenuMain();
       try {
