@@ -5,7 +5,7 @@ package com.trenlop;
  *
  */
 public class App {
-    public App() {
+    public App(int x) {
     }
 
     public static void main(String[] args) {
