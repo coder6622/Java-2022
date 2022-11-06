@@ -1,5 +1,7 @@
 package com.coder6622.models;
 
+import com.coder6622.utils.FunctionsCommon;
+
 // import java.util.regex.Pattern;
 
 public class Account {
@@ -10,45 +12,39 @@ public class Account {
     return accountNumber;
   }
 
-  public void setAccountNumber(String accountNumber) {
-
+  public boolean setAccountNumber(String accountNumber) {
     if (checkAccountNumberValid(accountNumber)) {
       this.accountNumber = accountNumber;
-      return;
+      return true;
     }
-
     System.out.println("Invalid account number");
+    return false;
   }
 
   public double getBalance() {
     return balance;
   }
 
-  public void setBalance(double balance) {
-    this.balance = balance;
+  public boolean setBalance(double balance) {
+    if (balance >= 50000) {
+      this.balance = balance;
+      return true;
+    } else {
+      System.out.println("Số dư phải lớn hơn 50_000 VNĐ");
+      return false;
+    }
   }
 
   @Override
   public String toString() {
-    return String.format("%s |\t %,.3fđ |\t %s", accountNumber, balance, isPremium());
-  }
-
-  private boolean isNumberic(String strNum) {
-    if (strNum == null) {
-      return false;
-    }
-    try {
-      Double.parseDouble(strNum);
-    } catch (NumberFormatException ex) {
-      return false;
-    }
-    return true;
+    return String.format("%s |\t %,.3fđ |\t %s", accountNumber, balance, isPremium() ? "Prenium" : "No Prenium");
   }
 
   private boolean checkAccountNumberValid(String strNum) {
+    int lengthAccountNumber = 6;
     if (strNum == null) {
       return false;
-    } else if (isNumberic(strNum) && strNum.length() == 6) {
+    } else if (FunctionsCommon.checkStringIsNumberic(strNum) && strNum.length() == lengthAccountNumber) {
       return true;
     }
     return false;

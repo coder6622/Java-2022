@@ -1,5 +1,7 @@
 package com.coder6622.models;
 
+import com.coder6622.utils.FunctionsCommon;
+
 public class User {
   private String customerId;
   private String name;
@@ -19,33 +21,21 @@ public class User {
     return customerId;
   }
 
-  public void setCustomerId(String customerId) {
+  public boolean setCustomerId(String customerId) {
     if (checkCustomerIdValid(customerId)) {
       this.customerId = customerId;
-      return;
-    }
-    System.out.println("Customer id khong hop le");
-  }
-
-  private boolean isNumberic(String strNum) {
-    if (strNum == null) {
-      return false;
-    }
-    try {
-      Double.parseDouble(strNum);
-    } catch (NumberFormatException ex) {
-      return false;
-    }
-    return true;
-  }
-
-  private boolean checkCustomerIdValid(String strNum) {
-    if (strNum == null) {
-      return false;
-    } else if (isNumberic(strNum) && strNum.length() == 6) {
       return true;
     }
     return false;
+  }
 
+  private boolean checkCustomerIdValid(String strNum) {
+    int lengthId = 12;
+    if (strNum == null) {
+      return false;
+    } else if (FunctionsCommon.checkStringIsNumberic(strNum) && strNum.length() == lengthId) {
+      return true;
+    }
+    return false;
   }
 }
