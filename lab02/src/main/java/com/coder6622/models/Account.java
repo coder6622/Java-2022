@@ -37,7 +37,8 @@ public class Account {
 
   @Override
   public String toString() {
-    return String.format("%s |\t %,.3fđ |\t %s", accountNumber, balance, isPremium() ? "Prenium" : "No Prenium");
+    String format = "%-12s | %-,29fđ | %-20s | \n";
+    return String.format(format, accountNumber, balance, isPremium() ? "Prenium" : "No Prenium");
   }
 
   private boolean checkAccountNumberValid(String strNum) {

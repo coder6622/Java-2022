@@ -55,17 +55,15 @@ public class Customer extends User {
   }
 
   public void displayInformation() {
-    String row1 = String.format(
-        "%s \t|\t %s \t|\t %s \t|\t %,.3fđ",
-        this.getCustomerId(),
+    String format = "%-12s | %-30s | %-20s | %,.3fđ\n";
+    System.out.printf(format, this.getCustomerId(),
         this.getName(),
         this.isPremium() ? "Premium" : "Normal",
         this.sumBalanceOfAccount());
-    System.out.println(row1);
     for (Account account : accounts) {
-      System.out.println(account);
-
+      System.out.print(account);
     }
+    System.out.println();
   }
 
 }

@@ -1,11 +1,8 @@
 package com.coder6622.models;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import javax.swing.text.DefaultEditorKit.CutAction;
 
 public class Bank {
 
@@ -67,7 +64,26 @@ public class Bank {
     for (Customer customer : customers) {
       customer.displayInformation();
     }
-
   }
 
+  public Customer searchCustomerByCustomerId(String cccd) {
+
+    for (Customer customer : customers) {
+      if (customer.getCustomerId().equals(cccd)) {
+        return customer;
+      }
+    }
+    return null;
+  }
+
+  public List<Customer> searchCustomerByName(String name) {
+
+    List<Customer> results = new ArrayList<Customer>();
+    for (Customer customer : customers) {
+      if (customer.getName().contains(name)) {
+        results.add(customer);
+      }
+    }
+    return results;
+  }
 }

@@ -1,6 +1,7 @@
 package com.coder6622;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import com.coder6622.models.Account;
@@ -20,25 +21,6 @@ public class App {
     public static void main(String[] args) {
         outputMenuMain();
         handleMenuMain();
-        // OutputMenuMain();
-        // System.out.println();
-
-        // Account account1 = new Account();
-        // account1.setAccountNumber("024569");
-        // account1.setBalance(10232323);
-        // System.out.println(account1);
-
-        // Account account2 = new Account();
-        // account2.setAccountNumber("323233");
-        // account2.setBalance(4545454);
-        // System.out.println(account2);
-
-        // Customer customer1 = new Customer();
-        // customer1.setCustomerId("068202000673");
-        // customer1.setName("Long");
-        // customer1.addAccount(account1);
-        // customer1.addAccount(account2);
-        // customer1.displayInformation();
     }
 
     private static void outputMenuMain() {
@@ -51,8 +33,8 @@ public class App {
         System.out.println("| 1. Thêm khách hàng");
         System.out.println("| 2. Thêm tài khoản cho khách hàng");
         System.out.println("| 3. Hiển thị danh sách khách hàng");
-        System.out.println("| 4. Tim theo ten khach hang");
-        System.out.println("| 5. Tìm theo CCCD");
+        System.out.println("| 4. Tìm theo CCCD ");
+        System.out.println("| 5. Tìm theo tên");
         System.out.println("| 0. Thoát");
         System.out.println(seperate);
         System.out.print(">>Chức năng: ");
@@ -146,6 +128,35 @@ public class App {
 
     }
 
+    private static void handleCaseSearchCustomerById() {
+
+        System.out.print("Nhập vào cccd cần tìm kiếm: ");
+        String cccd = scanner.nextLine();
+
+        Customer result = bank.searchCustomerByCustomerId(cccd);
+        if (result == null) {
+            System.out.println(String.format("Không tồn tại khách hàng có CCCD %s: ", cccd));
+        } else {
+            System.out.println(String.format("Khách hàng có CCCD %s: ", cccd));
+            result.displayInformation();
+        }
+    }
+
+    private static void handleSearchCustomerByNameCase() {
+        System.out.print("Nhập vào tên cần tìm kiếm: ");
+        String name = scanner.nextLine();
+
+        List<Customer> results = bank.searchCustomerByName(name);
+        if (results.size() == 0) {
+            System.out.println(String.format("Không tồn tại khách hàng có tên %s là: ", name));
+        } else {
+            System.out.println(String.format("Không tồn tại khách hàng có tên %s là: ", name));
+            for (Customer customer : results) {
+                customer.displayInformation();
+            }
+        }
+    }
+
     private static void handleMenuMain() {
         do {
             outputMenuMain();
@@ -169,9 +180,13 @@ public class App {
                         break;
                     }
                     case 4: {
+                        scanner.nextLine();
+                        handleCaseSearchCustomerById();
                         break;
                     }
                     case 5: {
+                        scanner.nextLine();
+                        handleSearchCustomerByNameCase();
                         break;
                     }
                     case 0: {
