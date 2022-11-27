@@ -1,6 +1,5 @@
 package com.coder6622.asm03.models;
 
-import com.coder6622.asm02.models.Account;
 import com.coder6622.asm02.models.Customer;
 import com.coder6622.asm03.models.common.IWithdraw;
 

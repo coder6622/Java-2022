@@ -212,9 +212,9 @@ public class App {
 
     private static boolean inputCCCD() {
         int length;
-        int soLanNhapCode = 0;
+        int soLanNhap = 0;
         do {
-            if (soLanNhapCode > 0) {
+            if (soLanNhap > 0) {
                 System.out.print("CCCD không hợp lệ, vui lòng nhập lại hoặc \'No\' để thoát: ");
             } else {
                 System.out.print("Nhập CCCD: ");
@@ -223,7 +223,7 @@ public class App {
             length = cccd.length();
             System.out.println(length);
             System.out.println(cccd);
-            soLanNhapCode++;
+            soLanNhap++;
             if (cccd.equals("No")) {
                 return false;
             }

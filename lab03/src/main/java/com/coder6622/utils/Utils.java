@@ -27,4 +27,13 @@ public class Utils {
   public static String getDateTimeNow() {
     return new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(Calendar.getInstance().getTime());
   }
+
+  public static boolean kiemTraBoiSoCua10(double amount) {
+    return (amount / 1000) % 10 == 0;
+  }
+
+  public static String formatMoney(double money) {
+    new String();
+    return String.format("%,.3fđ", money);
+  }
 }

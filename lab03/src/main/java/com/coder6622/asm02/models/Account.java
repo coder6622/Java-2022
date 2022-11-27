@@ -1,11 +1,12 @@
 package com.coder6622.asm02.models;
 
+import com.coder6622.asm03.models.common.IReportService;
 import com.coder6622.asm03.models.common.IWithdraw;
 import com.coder6622.utils.Utils;
 
 // import java.util.regex.Pattern;
 
-public class Account implements IWithdraw {
+public class Account implements IWithdraw, IReportService {
   protected String accountNumber;
   protected double balance;
 
@@ -73,6 +74,15 @@ public class Account implements IWithdraw {
   @Override
   public boolean isAccepted(double amount) {
     return false;
+  }
+
+  @Override
+  public void log(double amout) {
+    System.out.println(Utils.getDivider());
+    System.out.printf("NGAY G/D: %28s%n", Utils.getDateTimeNow());
+    System.out.printf("ATM ID: %30s%n", "DIGITAL-BANK-ATM 2022");
+    System.out.printf("SO TK: %31s%n", this.getAccountNumber());
+
   }
 
 }

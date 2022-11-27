@@ -6,9 +6,13 @@ import java.util.Scanner;
 import com.coder6622.asm02.models.Account;
 import com.coder6622.asm02.models.Customer;
 import com.coder6622.asm03.models.DigitalBank;
+import com.coder6622.asm03.models.HistoryTransaction;
 import com.coder6622.asm03.models.LoansAccount;
 import com.coder6622.asm03.models.SavingAccount;
+import com.coder6622.asm03.models.Transaction;
+import com.coder6622.asm03.models.TransactionCustomer;
 import com.coder6622.asm03.models.common.AccountType;
+import com.coder6622.utils.Utils;
 
 /**
  * Hello world!
@@ -17,15 +21,13 @@ import com.coder6622.asm03.models.common.AccountType;
 
 public class App {
 
-    private static final int EXIT_COMMAND_CODE = 0;
-    private static final int EXIT_ERROR_CODE = -1;
     private static final DigitalBank activeBank = new DigitalBank();
 
-    private static final String CUSTOMER_ID = "001215000001";
-    private static final String CUSTOMER_NAME = "FUNIX";
     private static final Scanner scanner = new Scanner(System.in);
-    private static final Account newAccount = new Account();
     private static final Customer newCustomer = new Customer();
+    private static final Customer newCustomer1 = new Customer();
+
+    private static HistoryTransaction historyTransaction = new HistoryTransaction();
 
     private static boolean isRunApp = true;
 
@@ -80,6 +82,8 @@ public class App {
                         break;
                     }
                     case 5: {
+                        scanner.nextLine();
+                        handleTransactionCase();
                         break;
                     }
                     case 0: {
@@ -98,13 +102,25 @@ public class App {
     // todo: methods
 
     private static void initialCustomer() {
-        newCustomer.setCustomerId(CUSTOMER_ID);
-        newCustomer.setName(CUSTOMER_NAME);
+        // customer 1
+        newCustomer.setCustomerId("068202000678");
+        newCustomer.setName("Long 1");
+
         newCustomer.addAccount(new LoansAccount("123456", 400000));
         newCustomer.addAccount(new LoansAccount("234569", 900000));
         newCustomer.addAccount(new SavingAccount("234567", 400000));
         newCustomer.addAccount(new SavingAccount("234568", 400000000));
 
+        // customer 2
+        newCustomer1.setCustomerId("068202000673");
+        newCustomer1.setName("Long");
+
+        newCustomer1.addAccount(new LoansAccount("123456", 400000));
+        newCustomer1.addAccount(new LoansAccount("234569", 900000));
+        newCustomer1.addAccount(new SavingAccount("234567", 400000));
+        newCustomer1.addAccount(new SavingAccount("234568", 400000000));
+
+        activeBank.addCustomer(newCustomer1);
         activeBank.addCustomer(newCustomer);
     }
 
@@ -152,8 +168,9 @@ public class App {
                 return;
             }
             System.out.print("Nhập mã STK gồm 6 chữ số (Nhập 'No' để thoát): ");
-            accountNumber = scanner.nextLine();
-            if (accountNumber.equals("No")) {
+            try {
+                accountNumber = scanner.nextLine();
+            } catch (InputMismatchException e) {
                 return;
             }
             soLanNhapAccountNumber++;
@@ -180,7 +197,7 @@ public class App {
 
         String cccd;
         String accountNumber;
-        double soTienRut;
+        double soTienRut = -1.0;
         Account account;
 
         Customer customer;
@@ -227,18 +244,26 @@ public class App {
             }
             System.out.print("Nhập số tiền cần rút (Nhập 'No' đễ thoát): ");
             soTienRut = scanner.nextDouble();
+            if (String.valueOf(soTienRut).equals("No")) {
+                return;
+            }
             soLanNhapSoTienRut++;
         } while (!account.withdraw(soTienRut));
 
+        TransactionCustomer transactionCustomer = historyTransaction.getTransactionTestByCustoer(customer);
+
+        transactionCustomer
+                .addTransaction(new Transaction(account.getAccountNumber(), soTienRut, Utils.getDateTimeNow(), true));
         return;
     }
 
     private static void showCustomer() {
-        Customer customer = activeBank.getCustomerById(CUSTOMER_ID);
-        if (customer != null) {
+        for (Customer customer : activeBank.getCustomers()) {
             customer.displayInformation();
-        } else {
-            System.out.println("null");
         }
+    }
+
+    private static void handleTransactionCase() {
+        historyTransaction.displayInformation();
     }
 }

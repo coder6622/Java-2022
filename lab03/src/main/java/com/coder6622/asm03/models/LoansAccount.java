@@ -1,11 +1,9 @@
 package com.coder6622.asm03.models;
 
 import com.coder6622.asm02.models.Account;
-import com.coder6622.asm03.models.common.IReportService;
-import com.coder6622.asm03.models.common.IWithdraw;
 import com.coder6622.utils.Utils;
 
-public class LoansAccount extends Account implements IReportService {
+public class LoansAccount extends Account {
 
   private double transactionFee;
 
@@ -49,6 +47,7 @@ public class LoansAccount extends Account implements IReportService {
         return true;
       }
     }
+    System.out.println("Có lỗi xảy ra");
     return false;
   }
 
@@ -65,12 +64,11 @@ public class LoansAccount extends Account implements IReportService {
   public void log(double amout) {
     System.out.println(Utils.getDivider());
     System.out.printf("%30s%n", "Bien lai giao dich Loans".toUpperCase());
-    System.out.printf("NGAY G/D: %28s%n", Utils.getDateTimeNow());
-    System.out.printf("ATM ID: %30s%n", "DIGITAL-BANK-ATM 2022");
-    System.out.printf("SO TK: %31s%n", this.getAccountNumber());
-    System.out.printf("SO TIEN: %29s%n", amout);
-    System.out.printf("SO DU: %31s%n", this.getBalance());
-    System.out.printf("PHI + VAT: %27s%n", this.getTransactionFee());
+    super.log(amout);
+
+    System.out.printf("SO TIEN: %29s%n", Utils.formatMoney(amout));
+    System.out.printf("SO DU: %31s%n", Utils.formatMoney(this.getBalance()));
+    System.out.printf("PHI + VAT: %27s%n", Utils.formatMoney(this.getTransactionFee()));
     System.out.println(Utils.getDivider());
   }
 

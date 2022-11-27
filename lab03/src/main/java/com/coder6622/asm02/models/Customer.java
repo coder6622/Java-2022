@@ -65,15 +65,17 @@ public class Customer extends User {
 
   public void displayInformation() {
     // %,.3fđ
+    System.out.println();
     String format = "%-12s | %-30s | %-20s | %-,29fđ | \n";
     System.out.printf(format, this.getCustomerId(),
         this.getName(),
         this.isPremium() ? "Premium" : "Normal",
         this.sumBalanceOfAccount());
+    System.out
+        .println("-------------");
     for (Account account : accounts) {
       System.out.print(account);
     }
-    System.out.println();
   }
 
 }
